@@ -5,8 +5,8 @@
 	path = external/glm
 	url = https://github.com/g-truc/glm
 [submodule "external/stb"]
-	path = external/stb
+	path = external/stb/stb
 	url = https://github.com/nothings/stb
 [submodule "external/FastNoise"]
-	path = external/FastNoise
+	path = external/fastnoise/FastNoise
 	url = https://github.com/Auburns/FastNoise

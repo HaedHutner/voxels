@@ -1,3 +1,9 @@
+# VS Code
+/.vscode
+
+# Build Dir
+/build
+
 # C++ General Files
 
 # Prerequisites
