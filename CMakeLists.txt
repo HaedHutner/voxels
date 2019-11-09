@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.12)
 
 project(placeholder)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 add_subdirectory("external/stb")
 add_subdirectory("external/fastnoise")
 add_subdirectory("external/glad")
