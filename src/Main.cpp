@@ -37,9 +37,18 @@ int main() {
 
     printf("OpenGL %d.%d\n", GLVersion.major, GLVersion.minor);
 
+    glClearColor(135.0/255.0, 206.0/255.0, 235.0/255.0, 1.0);
+
     while (!glfwWindowShouldClose(window)) {
 
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_ACCUM_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glBegin(GL_TRIANGLES);
+        glColor3b(0.1, 0.1, 0.1);
+        glVertex2d(0, 0);
+        glVertex2d(0, 1);
+        glVertex2d(1, 0);
+        glEnd();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
