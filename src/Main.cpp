@@ -6,6 +6,8 @@
 #include <FastNoise/FastNoise.h>
 #include <stb/stb_image.h>
 
+#include <VoxelChunk.hpp>
+
 const GLfloat SQUARE_VERTICES[] = {
     -0.5f, -0.5f, 0.0f,
     +0.5f, -0.5f, 0.0f,
