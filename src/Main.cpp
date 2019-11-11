@@ -6,21 +6,23 @@
 #include <FastNoise/FastNoise.h>
 #include <stb/stb_image.h>
 
-const GLfloat TRIANGLE_VERTICES[] = {
-    -1.0f, -1.0f, 0.0f,
-    1.0f, -1.0f, 0.0f,
-    0.0f,  1.0f, 0.0f,
+const GLfloat SQUARE_VERTICES[] = {
+    -0.5f, -0.5f, 0.0f,
+    +0.5f, -0.5f, 0.0f,
+    +0.5f, +0.5f, 0.0f,
+    -0.5f, +0.5f, 0.0f
 };
 
-const GLuint TRIANGLE_INDICES[] = {
-    0, 1, 2,
-    2, 1, 3
+const GLuint SQUARE_INDICES[] = {
+    0, 1, 2, 
+    0, 3, 2
 };
 
 int main()
 {
     GLFWwindow *window;
 
+    // GLFW Error callback
     glfwSetErrorCallback([](int error, const char *desc) { fputs(desc, stderr); });
 
     if (!glfwInit())
@@ -32,9 +34,9 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
-    window = glfwCreateWindow(800, 600, "placeholder", nullptr, nullptr);
+    window = glfwCreateWindow(600, 600, "placeholder", nullptr, nullptr);
 
     if (!window)
     {
@@ -43,6 +45,11 @@ int main()
     }
 
     glfwMakeContextCurrent(window);
+
+    // Window resize callback
+    glfwSetWindowSizeCallback(window, [](GLFWwindow *window, int width, int height){
+        glViewport(0, 0, width, height);
+    });
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -58,11 +65,11 @@ int main()
 
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(TRIANGLE_VERTICES), TRIANGLE_VERTICES, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(SQUARE_VERTICES), SQUARE_VERTICES, GL_STATIC_DRAW);
 
     glGenBuffers(1, &ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(TRIANGLE_INDICES), TRIANGLE_INDICES, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(SQUARE_INDICES), SQUARE_INDICES, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -70,6 +77,8 @@ int main()
     glBindVertexArray(0);
 
     glClearColor(135.0 / 255.0, 206.0 / 255.0, 235.0 / 255.0, 1.0);
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -84,7 +93,7 @@ int main()
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
 
-        glDrawElements(GL_TRIANGLES, sizeof(TRIANGLE_INDICES), GL_UNSIGNED_INT, NULL);
+        glDrawElements(GL_TRIANGLES, sizeof(SQUARE_INDICES), GL_UNSIGNED_INT, NULL);
 
         glDisableVertexAttribArray(0);
 
